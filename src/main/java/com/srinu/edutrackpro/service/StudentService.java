@@ -1,15 +1,19 @@
 package com.srinu.edutrackpro.service;
 
-import com.srinu.edutrackpro.entity.Student;
+import com.srinu.edutrackpro.dto.StudentRequest;
+import com.srinu.edutrackpro.dto.StudentResponse;
+
 import java.util.List;
 
 public interface StudentService {
 
-    Student saveStudent(Student student);
+    StudentResponse saveStudent(StudentRequest request);
 
-    List<Student> getAllStudents();
+    List<StudentResponse> getAllStudents();
 
-    Student getStudentById(Long id);
+    StudentResponse getStudentById(Long id);
 
     void deleteStudent(Long id);
+
+    StudentResponse updateStudent(Long id,StudentRequest request);
 }
