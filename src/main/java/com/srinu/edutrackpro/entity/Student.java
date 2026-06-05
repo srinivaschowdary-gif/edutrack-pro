@@ -23,4 +23,16 @@ public class Student {
 
     @Column(nullable = false,unique = true)
     private String email;
+
+    @Column(name="phone_number")
+    private String phoneNumber;
+
+    @Column(nullable = false)
+    private String department;
+
+    @Column(nullable = false)
+    private String semester;
+
+    @Enumerated(EnumType.STRING)
+    private StudentStatus status;
 }
