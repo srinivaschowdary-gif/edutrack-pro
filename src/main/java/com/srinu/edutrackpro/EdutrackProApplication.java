@@ -9,7 +9,7 @@ public class EdutrackProApplication {
     public static void main(String[] args) {
 
         SpringApplication.run(EdutrackProApplication.class, args);
-        System.out.printf("Welcome to EdutrackPro Application");
+        System.out.print("Welcome to EdutrackPro Application");
     }
 
 }
