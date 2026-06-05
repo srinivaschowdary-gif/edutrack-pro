@@ -3,6 +3,7 @@ package com.srinu.edutrackpro.controller;
 import com.srinu.edutrackpro.entity.Student;
 import com.srinu.edutrackpro.service.StudentService;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.security.PublicKey;
 import java.util.List;
@@ -18,7 +19,7 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student createStudent(@RequestBody Student student){
+    public Student createStudent(@Valid@RequestBody Student student){
         return studentService.saveStudent(student);
     }
 
