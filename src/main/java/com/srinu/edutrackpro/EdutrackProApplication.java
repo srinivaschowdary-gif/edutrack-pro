@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EdutrackProApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(EdutrackProApplication.class, args);
+        System.out.printf("Welcome to EdutrackPro Application");
     }
 
 }
