@@ -11,11 +11,22 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleValidationException(
-            MethodArgumentNotValidException ex){
+            MethodArgumentNotValidException ex) {
 
         String error = ex.getBindingResult()
                 .getFieldError()
                 .getDefaultMessage();
-        return new ResponseEntity<>(error,HttpStatus.BAD_REQUEST);
+
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(StudentNotFoundException.class)
+    public ResponseEntity<String> handleStudentNotFoundException(
+            StudentNotFoundException ex) {
+
+        return new ResponseEntity<>(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND
+        );
     }
 }
