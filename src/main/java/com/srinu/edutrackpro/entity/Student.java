@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import lombok.*;
 
 @Entity
@@ -37,11 +38,27 @@ public class Student {
     @Column(nullable = false)
     private String department;
 
-    @NotBlank(message = "Semester is required")
+    @NotNull(message = "Semester is required")
     @Column(nullable = false)
     private Integer semester;
 
     @Enumerated(EnumType.STRING)
     private StudentStatus status;
 
+    @Column(nullable = false,updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void prePersist(){
+        this.createdAt=LocalDateTime.now();
+        this.updatedAt=LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        this.updatedAt=LocalDateTime.now();
+    }
 }
