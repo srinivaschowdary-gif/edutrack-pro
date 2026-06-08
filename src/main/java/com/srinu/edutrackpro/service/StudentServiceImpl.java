@@ -3,6 +3,7 @@ package com.srinu.edutrackpro.service;
 import com.srinu.edutrackpro.dto.StudentRequest;
 import com.srinu.edutrackpro.dto.StudentResponse;
 import com.srinu.edutrackpro.entity.Student;
+import com.srinu.edutrackpro.exception.StudentNotFoundException;
 import com.srinu.edutrackpro.mapper.StudentMapper;
 import com.srinu.edutrackpro.repository.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,8 @@ public class StudentServiceImpl implements StudentService {
 
         Student student = studentRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Student not found with id: " + id));
+                        new StudentNotFoundException(
+                                "Student not found with id: " + id));
 
         return StudentMapper.toResponse(student);
     }
@@ -50,15 +52,21 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public void deleteStudent(Long id) {
 
-        studentRepository.deleteById(id);
+        Student student = studentRepository.findById(id)
+                .orElseThrow(() ->
+                        new StudentNotFoundException(
+                                "Student not found with id: " + id));
+
+        studentRepository.delete(student);
     }
 
     @Override
-    public StudentResponse updateStudent(Long id, StudentRequest request){
+    public StudentResponse updateStudent(Long id, StudentRequest request) {
 
         Student student = studentRepository.findById(id)
-                .orElseThrow(()->
-                        new RuntimeException("Student not found with id:"+id));
+                .orElseThrow(() ->
+                        new StudentNotFoundException(
+                                "Student not found with id: " + id));
 
         student.setStudentCode(request.getStudentCode());
         student.setFirstName(request.getFirstName());
@@ -69,8 +77,8 @@ public class StudentServiceImpl implements StudentService {
         student.setSemester(request.getSemester());
         student.setStatus(request.getStatus());
 
-        Student updateStudent = studentRepository.save(student);
+        Student updatedStudent = studentRepository.save(student);
 
-        return StudentMapper.toResponse(updateStudent);
+        return StudentMapper.toResponse(updatedStudent);
     }
 }
