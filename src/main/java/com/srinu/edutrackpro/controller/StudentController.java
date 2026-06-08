@@ -45,32 +45,55 @@ public class StudentController {
     }
 
     @GetMapping
-    public List<StudentResponse> getAllStudents() {
+    public ResponseEntity<ApiResponse<List<StudentResponse>>> getAllStudents() {
 
-        return studentService.getAllStudents();
+        List<StudentResponse> students =
+                studentService.getAllStudents();
+
+        ApiResponse<List<StudentResponse>> response =
+                new ApiResponse<>(
+                        true,
+                        "Students fetched successfully",
+                        students
+                );
+
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{id}")
-    public StudentResponse getStudentById(
-            @PathVariable Long id) {
-
-        return studentService.getStudentById(id);
-    }
 
     @DeleteMapping("/{id}")
-    public void deleteStudent(
+    public ResponseEntity<ApiResponse<String>> deleteStudent(
             @PathVariable Long id) {
 
         studentService.deleteStudent(id);
+
+        ApiResponse<String> response =
+                new ApiResponse<>(
+                        true,
+                        "Student deleted successfully",
+                        null
+                );
+
+        return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/{id}")
-    public StudentResponse updateStudent(
-            @PathVariable Long id,
-            @Valid @RequestBody StudentRequest request){
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<StudentResponse>> getStudentById(
+            @PathVariable Long id) {
 
-        return studentService.updateStudent(id,request);
+        StudentResponse student =
+                studentService.getStudentById(id);
+
+        ApiResponse<StudentResponse> response =
+                new ApiResponse<>(
+                        true,
+                        "Student fetched successfully",
+                        student
+                );
+
+        return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/paged")
     public Page<StudentResponse> getStudents(
